@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Belt Exam</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app_1/css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><h2>Hello, {{current_user.first_name}}! Create a Trip!</h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto"></ul>
+        <span class="navbar-text">
+            <h6><a href="/logout">Log Out  </a></h6>
+        </span>
+        </div>
+    </nav>
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+    <div class="container limited_width">
+            <form action="/trips/new/request" method="POST">
+                {%csrf_token%}
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Destination</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="destination" class="form-control" id="inputEmail3" placeholder="Add destination">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Start Date</label>
+                    <div class="col-sm-10">
+                    <input type="date" name ="start_date" class="form-control" id="inputPassword3">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">End Date</label>
+                    <div class="col-sm-10">
+                    <input type="date" name ="end_date" class="form-control" id="inputPassword3">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Plan</label>
+                    <div class="col-sm-10">
+                            <textarea class="form-control" name ='plan' id="exampleFormControlTextarea1" rows="3" placeholder="Explain the plan here!"></textarea>                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                    <a href="/dashboard"><button type="button" class="btn btn-primary">Cancel</button></a>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+    
+</body>
+</html>
+
+<!-- <fieldset class="form-group">
+        <div class="row">
+        <legend class="col-form-label col-sm-2 pt-0">Category:</legend>
+        <div class="col-sm-10">
+            <div class="form-check">
+           
+
+            <input class="form-check-input" type="radio" id="gridRadios1" value="option1" checked>
+            <label class="form-check-label" for="gridRadios1">
+                
+            </label>
+            <br>
+   
+            </div>
+        </div>
+        </div>
+    </fieldset>  -->

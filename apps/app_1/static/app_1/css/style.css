@@ -1,0 +1,24 @@
+.made-column {
+    display: inline-block;
+    vertical-align: top;
+    width: 45%;
+    padding: 20px;
+}
+.column-holder {
+    text-align: center;
+
+}
+.col-sm-10 {
+    padding-left: 40px;
+}
+
+.less_space {
+    margin-bottom: 0rem !important;
+}
+
+.limited_width {
+    width: 60%;
+    border: 2px solid black;
+    padding: 20px;
+    margin: 10px;
+}

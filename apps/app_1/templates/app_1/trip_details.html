@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Belt Exam</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app_1/css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><h2>Hello, {{current_user.first_name}}! Read about this trip!</h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto"></ul>
+        <span class="navbar-text">
+            <h6><a href="/dashboard">Dashboard  </a>   <a href="/logout">Log Out  </a></h6>
+        </span>
+        </div>
+    </nav>
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+<br>
+<div class = "container">
+    <h3>{{trip_details.destination}}</h3>
+    <div class="container limited_width">
+            <p>Start Date: {{trip_details.start_date|date:'m/d/Y'}}</p>
+            <p>End Date: {{trip_details.end_date|date:'m/d/Y'}}</p>
+            <p>Created on: {{trip_details.created_at|date:'m/d/Y'}}</p>
+            <p>Last Updated: {{trip_details.updated_at|date:'m/d/Y'}}</p>
+            <p>Plan: {{trip_details.plan}}</p>
+            <p>Created by: {{poster}}</p>
+    
+    </div>
+    <div class="container limited_width">
+
+        <p>People who've joined the trip:</p>
+        {%for user in trip_attendees%}
+        <p>{{user.first_name}}</p>
+        {%endfor%}
+    </div>
+</div>
+</body>
+</html>

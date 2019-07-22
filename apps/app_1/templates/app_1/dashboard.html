@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Belt Exam</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app_1/css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><h2>Hello, {{current_user.first_name}}</h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto"></ul>
+        <span class="navbar-text">
+            <h6><a href="/logout">Log Out  </a><a href="/trips/new"><button type="button" class="btn btn-outline-secondary">Create a new trip!</button></a></h6>
+        </span>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+                <h2>Your trips:</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Destination</th></th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Plan</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        {% for trip in users_trips %}
+                        {%if current_user in trip.trips_on.all%}
+                        <th scope="row"><a href="/trips/{{trip.id}}">{{trip.destination}}</a></th>
+                        <td>{{trip.start_date|date:'m/d/Y'}}</td>
+                        <td>{{trip.end_date|date:'m/d/Y'}}</td>
+                        <td>{{trip.plan}}</td>
+                        <td>{%if trip.uploaded_by == current_user%}<a href="/trips/delete/{{trip.id}}">Remove</a> | <a href="/trips/edit/{{trip.id}}">Edit</a> {%else%}<a href="/trips/giveup/{{trip.id}}">Cancel</a>{%endif%}</td>
+                        </tr>
+                        {%else%}
+                        {%endif%}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <h2>Other people's trips</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                        <th scope="col">Destination</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Plan</th>
+                        <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+    {% for trip in all_trips %}
+    {%if not current_user in trip.trips_on.all%}
+    
+    <th scope="row"><a href="/trips/{{trip.id}}">{{trip.destination}}</a></th>
+                        <td>{{trip.start_date|date:'m/d/Y'}}</td>
+                        <td>{{trip.end_date|date:'m/d/Y'}}</td>
+                        <td>{{trip.plan}}</td>
+                        <td><a href="/trips/{{trip.id}}/add">Join</a></td>
+                        </tr>
+                        {%else%}
+                        {%endif%}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+</body>
+</html>
